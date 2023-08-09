@@ -38,8 +38,27 @@ const MORSE_TABLE = {
 };
 
 function decode(expr) {
-    // write your solution here
+
+   let arrayTens = expr.match(/.{1,10}/g);
+   let result = '';
+
+   arrayTens.forEach(symbols => symbols === '**********'? result += ' ' : result += decoderSymbol(symbols));
+      
+   return result;   
 }
+
+function decoderSymbol (symbols) {
+
+    let resString = '';
+ 
+    for (let i=0; i<symbols.length; i+=2) {
+
+         if (symbols.slice(i, i+2) === '00') continue;
+         else if (symbols.slice(i, i+2) === '10') resString += '.';
+         else if (symbols.slice(i, i+2) === '11') resString += '-';
+    }
+    return MORSE_TABLE[resString];
+   }
 
 module.exports = {
     decode
